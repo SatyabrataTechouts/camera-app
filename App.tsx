@@ -90,6 +90,7 @@ const App = () => {
             height: 200,
             alignSelf: 'center',
             marginVertical: 12,
+            borderRadius:20,
           }}
         />
       )}
