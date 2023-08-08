@@ -4,10 +4,10 @@ import * as ImagePicker from 'react-native-image-picker';
 
 interface optionsProps {
   mediaType: ImagePicker.MediaType;
-  quality:ImagePicker.PhotoQuality;
+  quality: ImagePicker.PhotoQuality;
 }
 const App = () => {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<String>('');
 
   const pickImage = async () => {
     const options: optionsProps = {
@@ -28,7 +28,7 @@ const App = () => {
   const shotPhoto = async () => {
     console.log('open cemera');
 
-    const option = {
+    const option: optionsProps = {
       mediaType: 'photo' || 'video',
       quality: 1, // 0.0 -
     };
@@ -57,7 +57,7 @@ const App = () => {
             },
             {
               text: 'Cencel',
-             // onPress: pickImage,
+              // onPress: pickImage,
             },
           ]);
         }}>
@@ -69,14 +69,14 @@ const App = () => {
             borderColor: '#000',
             borderWidth: 1,
             justifyContent: 'center',
-            backgroundColor:'blue'
+            backgroundColor: 'blue',
           }}>
           <Text
             style={{
               fontSize: 16,
               marginBottom: 20,
               alignSelf: 'center',
-              color:'#fff'
+              color: '#fff',
             }}>
             Pick an Image
           </Text>
@@ -85,7 +85,12 @@ const App = () => {
       {image && (
         <Image
           source={{uri: image}}
-          style={{width: 200, height: 200, alignSelf: 'center'}}
+          style={{
+            width: 200,
+            height: 200,
+            alignSelf: 'center',
+            marginVertical: 12,
+          }}
         />
       )}
     </View>
