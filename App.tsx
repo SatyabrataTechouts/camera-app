@@ -3,8 +3,8 @@ import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 
 interface optionsProps {
-  mediaType: String;
-  quality: Number;
+  mediaType: ImagePicker.MediaType;
+  quality:ImagePicker.PhotoQuality;
 }
 const App = () => {
   const [image, setImage] = useState(null);
@@ -46,7 +46,7 @@ const App = () => {
     <View style={{justifyContent: 'center', flex: 1, alignItems: 'center'}}>
       <TouchableOpacity
         onPress={() => {
-          Alert.alert('Enter Options', '', [
+          Alert.alert('Enter Options', 'For upload image', [
             {
               text: 'open cemera',
               onPress: shotPhoto,
@@ -54,6 +54,10 @@ const App = () => {
             {
               text: 'open gallery',
               onPress: pickImage,
+            },
+            {
+              text: 'Cencel',
+             // onPress: pickImage,
             },
           ]);
         }}>
