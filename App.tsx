@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Text, TouchableOpacity, View, } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import Video from 'react-native-video';
 interface optionsProps {
@@ -29,8 +29,9 @@ const App = () => {
     console.log('open cemera');
 
     const option: optionsProps = {
-      mediaType: 'photo' || 'video',
+      mediaType:'mixed',
       quality: 1, // 0.0 -
+    
     };
     ImagePicker.launchCamera(option, res => {
       console.log('open cemera1', res);
