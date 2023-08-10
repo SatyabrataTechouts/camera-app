@@ -12,19 +12,30 @@ const video = () => {
       quality: 1,
     };
     ImagePicker.launchCamera(option, response => {
+        console.log("enter");
+        
       if (!response.didCancel && !response.errorMessage) {
-        console.log('open gallery');
-        setVideoUp(response);
         console.log('response', response);
+        console.log('open gallery');
+        setVideoUp(response.assets[0].uri);
+        
+      }
+      else{
+        console.log(response.errorMessage)
       }
     });
   };
   return (
     <View>
-      <Pressable onPress={addVideo}>
+      <Pressable onPress={()=>addVideo()}>
         <Text>video</Text>
       </Pressable>
-      <Video src={videoUP} style={{height: 70, width: 90, flex: 1}} />
+      <Video
+        source={{uri:videoUP}}
+        style={{height: 170, width: 190,flex:1}}
+        controls={true}
+        fullscreen={true}
+      />
     </View>
   );
 };
