@@ -39,6 +39,12 @@ const App = () => {
         console.log('open cemera2');
         setImage(res.assets[0].uri);
       }
+
+
+
+
+
+      
     });
   };
 
