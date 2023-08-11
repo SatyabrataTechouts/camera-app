@@ -1,43 +1,74 @@
 import React, { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Alert, Image, Pressable, Text, View } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import Video from 'react-native-video';
-const video = () => {
-  const [videoUP, setVideoUp] = useState();
-  const addVideo = () => {
-    const option = {
-      title: 'Select video',
-      mediaType: 'video',
-      path: 'video',
+
+const MediaComponent = () => {
+  const [mediaURI, setMediaURI] = useState(null);
+
+  const addMedia = async mediaType => {
+    const options = {
+      mediaType: mediaType,
       quality: 1,
     };
-    ImagePicker.launchCamera(option, response => {
-        console.log("enter");
+
+    ImagePicker.launchCamera(options, response => {
         
-      if (!response.didCancel && !response.errorMessage) {
-        console.log('response', response);
-        console.log('open gallery');
-        setVideoUp(response.assets[0].uri);
-        
-      }
-      else{
-        console.log(response.errorMessage)
+      if (response.didCancel) {
+        // User canceled the capture
+        Alert.alert('Capture Canceled', 'You canceled the capture.');
+      } else if (response.error) {
+        // Error during capture
+        Alert.alert('Error', 'An error occurred during capture.');
+      } else {
+        // Capture successful
+        setMediaURI(response.assets[0].uri);
       }
     });
   };
+
   return (
     <View>
-      <Pressable onPress={()=>addVideo()}>
-        <Text>video</Text>
-      </Pressable>
-      <Video
-        source={{uri:videoUP}}
-        style={{height: 170, width: 190,flex:1}}
-        controls={true}
-        fullscreen={true}
-      />
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          marginBottom: 20,
+          marginVertical:23
+        }}>
+        <Pressable
+          onPress={() => addMedia('photo')}
+          style={{height: 45, width: 120, borderWidth: 1}}>
+          <Text style={{alignSelf:'center'}}>Capture Image</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => addMedia('video')}
+          style={{height: 45, width: 120, borderWidth: 1}}>
+          <Text style={{alignSelf:'center'}}>Capture Video</Text>
+        </Pressable>
+      </View>
+      {mediaURI && (
+        <View style={{flex: 1, alignItems: 'center'}}>
+          {mediaURI.endsWith('.mp4') ? (
+            <VideoComponent videoURI={mediaURI} />
+          ) : (
+            <Image source={{uri: mediaURI}} style={{width: 300, height: 300}} />
+          )}
+        </View>
+      )}
     </View>
   );
 };
 
-export default video;
+const VideoComponent = ({videoURI}) => {
+  return (
+    <Video
+      source={{uri: videoURI}}
+      controls={true}
+      fullscreen={false}
+      style={{width: 300, height: 300}}
+    />
+  );
+};
+
+export default MediaComponent;
